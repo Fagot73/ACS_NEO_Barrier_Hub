@@ -160,7 +160,6 @@ def check_permission(code_event, user_profile, wig, photo, reader, code_park):
 
             user = database_work.get_user(wig)
             group = database_work.get_group(wig)
-
             user_profile.type_uuid = database_work.TypeUUID.card
             user_profile.name = user.name
             user_profile.surname = user.surname
@@ -176,97 +175,102 @@ def check_permission(code_event, user_profile, wig, photo, reader, code_park):
 
         elif code_event.value == database_work.CodeEvent.exaltation.value:
             user = database_work.get_user(wig)
-            group = database_work.get_group(wig)
-            database_work.create_event(name=user.name, surname=user.surname, uuid=user_profile.uuid,
-                                       plate_number=user_profile.plate_number,
-                                       direction=reader.zone.name_zone,
-                                       group=group.name_group,
-                                       type_passage=database_work.CodeTypePassage.automatically,
-                                       status=code_event,
-                                       photo=photo)
-
-            logger.bind(func='check_permission').info('Exaltation')
+            group = database_work.get_group(wig) if user else None
+            database_work.create_event(
+                name=user.name if user else None,
+                surname=user.surname if user else None,
+                uuid=user_profile.uuid,
+                plate_number=user_profile.plate_number,
+                direction=reader.zone.name_zone,
+                group=group.name_group if group else None,
+                type_passage=database_work.CodeTypePassage.automatically,
+                status=code_event,
+                photo=photo
+            )
+            logger.bind(func='check_permission', wig=wig, plate_number=user_profile.plate_number ).info('Exaltation')
 
         elif code_event.value == database_work.CodeEvent.passage_not_take_place.value:
-
             set_light_and_buzzer_state(code_park, red=1, green=0, yellow=0, buzzer=1, sleep_time=0.6, target_color='red')
-
             if user_profile.type_uuid.value == database_work.TypeUUID.auto.value:
                 user_profile.uuid = user_profile.plate_number
             else:
                 user_profile.uuid = wig
-
             user = database_work.get_user(wig)
-            group = database_work.get_group(wig)
-            database_work.create_event(name=user.name, surname=user.surname, uuid=user_profile.uuid,
-                                       plate_number=user_profile.plate_number,
-                                       direction=reader.zone.name_zone,
-                                       group=group.name_group,
-                                       type_passage=database_work.CodeTypePassage.automatically,
-                                       status=code_event,
-                                       photo=photo)
-
-            logger.bind(func='check_permission').info('Passage not take place')
+            group = database_work.get_group(wig) if user else None
+            database_work.create_event(
+                name=user.name if user else None,
+                surname=user.surname if user else None,
+                uuid=user_profile.uuid,
+                plate_number=user_profile.plate_number,
+                direction=reader.zone.name_zone,
+                group=group.name_group if group else None,
+                type_passage=database_work.CodeTypePassage.automatically,
+                status=code_event,
+                photo=photo
+            )
+            logger.bind(func='check_permission', wig=wig, plate_number=user_profile.plate_number).info('Passage not take place')
 
         elif code_event.value == database_work.CodeEvent.not_access_to_zone.value:
             database_work.create_card_in_system(wig, database_work.CodeStatusCard.not_access_to_zone, datetime.now())
-
             set_light_and_buzzer_state(code_park, red=1, green=0, yellow=0, buzzer=1, sleep_time=0.6, target_color='red')
-
             if user_profile.type_uuid.value == database_work.TypeUUID.auto.value:
                 user_profile.uuid = user_profile.plate_number
             else:
                 user_profile.uuid = wig
-
             user = database_work.get_user(wig)
-            group = database_work.get_group(wig)
-            database_work.create_event(name=user.name, surname=user.surname, uuid=user_profile.uuid,
-                                       plate_number=user_profile.plate_number,
-                                       direction=reader.zone.name_zone,
-                                       group=group.name_group,
-                                       type_passage=database_work.CodeTypePassage.automatically,
-                                       status=code_event,
-                                       photo=photo)
-            logger.bind(func='check_permission').info('Not access to zone')
+            group = database_work.get_group(wig) if user else None
+            database_work.create_event(
+                name=user.name if user else None,
+                surname=user.surname if user else None,
+                uuid=user_profile.uuid,
+                plate_number=user_profile.plate_number,
+                direction=reader.zone.name_zone,
+                group=group.name_group if group else None,
+                type_passage=database_work.CodeTypePassage.automatically,
+                status=code_event,
+                photo=photo
+            )
+            logger.bind(func='check_permission', wig=wig, plate_number=user_profile.plate_number).info('Not access to zone')
 
         elif code_event.value == database_work.CodeEvent.not_access_to_timezone.value:
             database_work.create_card_in_system(wig, database_work.CodeStatusCard.not_access_to_zone, datetime.now())
-            
             set_light_and_buzzer_state(code_park, red=1, green=0, yellow=0, buzzer=1, sleep_time=0.6, target_color='red')
-
             if user_profile.type_uuid.value == database_work.TypeUUID.auto.value:
                 user_profile.uuid = user_profile.plate_number
             else:
                 user_profile.uuid = wig
-
             user = database_work.get_user(wig)
-            group = database_work.get_group(wig)
-            database_work.create_event(name=user.name, surname=user.surname, uuid=user_profile.uuid,
-                                       plate_number=user_profile.plate_number,
-                                       direction=reader.zone.name_zone,
-                                       group=group.name_group,
-                                       type_passage=database_work.CodeTypePassage.automatically,
-                                       status=code_event,
-                                       photo=photo)
-            logger.bind(func='check_permission').info('Not access to timezone')
+            group = database_work.get_group(wig) if user else None
+            database_work.create_event(
+                name=user.name if user else None,
+                surname=user.surname if user else None,
+                uuid=user_profile.uuid,
+                plate_number=user_profile.plate_number,
+                direction=reader.zone.name_zone,
+                group=group.name_group if group else None,
+                type_passage=database_work.CodeTypePassage.automatically,
+                status=code_event,
+                photo=photo
+            )
+            logger.bind(func='check_permission', wig=wig, plate_number=user_profile.plate_number).info('Not access to timezone')
 
         elif code_event.value == database_work.CodeEvent.not_in_base.value:
             database_work.create_card_in_system(wig, database_work.CodeStatusCard.not_in_base, datetime.now())
-
             set_light_and_buzzer_state(code_park, red=1, green=0, yellow=0, buzzer=1, sleep_time=0.6, target_color='red')
-
             if user_profile.type_uuid.value == database_work.TypeUUID.auto.value:
                 user_profile.uuid = user_profile.plate_number
             else:
                 user_profile.uuid = wig
+            database_work.create_event(
+                uuid=user_profile.uuid,
+                plate_number=user_profile.plate_number,
+                direction=reader.zone.name_zone,
+                type_passage=database_work.CodeTypePassage.automatically,
+                status=code_event,
+                photo=photo
+            )
+            logger.bind(func='check_permission', wig=wig, plate_number=user_profile.plate_number).info('Not in base')
 
-            database_work.create_event(uuid=user_profile.uuid, plate_number=user_profile.plate_number,
-                                       direction=reader.zone.name_zone,
-                                       type_passage=database_work.CodeTypePassage.automatically,
-                                       status=code_event,
-                                       photo=photo)
-
-            logger.bind(func='check_permission').info('Not in base')
 
     except Exception as ex:
         logger.bind(func='check_permission').exception(ex)
@@ -274,7 +278,7 @@ def check_permission(code_event, user_profile, wig, photo, reader, code_park):
 
 def check_state_inputs(status):
     #logger.bind(func='check_state_inputs').debug('Run func')
-    logger.bind(func='check_state_inputs', data=f'Data - {status}').info('')
+    #logger.bind(func='check_state_inputs', data=f'Data - {status}').info('')
     try:
         if status['dts1'] and not status['dts2']:
             state['dts1'] = True
